@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="ru">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Вариант 23</title>
+    <link rel="stylesheet" href="/static/lol.css">
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+</head>
+
+<body>
+    <!-- Контейнер для SVG -->
+    <div id="svg-container">
+        <!-- SVG файл будет загружен сюда -->
+        <script>
+            // Загружаем SVG-файл
+            $(document).ready(function () {
+                $('#svg-container').load('/static/mesh.svg', function () {
+                    // После загрузки SVG-файла, добавляем обработчики событий
+                    const svg = $('#svg-container svg');
+
+                    // Функция, вызываемая при наведении на узел
+                    function highlightElement(event) {
+                        // Меняем цвет узла на выбранный цвет
+                        $(event.currentTarget).attr('fill', selectedColor);
+                    }
+
+                    // Функция, вызываемая при уводе мыши с узла
+                    function resetElementColor(event) {
+                        // Сбрасываем цвет узла на исходный серый
+                        $(event.currentTarget).attr('fill', grayColor);
+                    }
+
+                    // Определяем начальные цвета
+                    let selectedColor = '#ff0000';  // Начальный цвет для узлов при наведении (по умолчанию красный)
+                    const grayColor = '#bfbfbf';  // Исходный серый цвет узлов
+
+                    // Добавляем обработчики событий на все узлы (круги)
+                    svg.find('circle').on('mouseenter', highlightElement);
+                    svg.find('circle').on('mouseleave', resetElementColor);
+
+                    // Устанавливаем исходный цвет для всех узлов
+                    svg.find('circle').attr('fill', grayColor);
+                });
+            });
+        </script>
+    </div>
+
+    <!-- Форма выбора цвета -->
+    <div id="color-form">
+        <h3>Выберите цвет для узлов:</h3>
+        <form id="color-picker-form">
+            <label>
+                <input type="radio" name="color" value="#ff0000" checked> Красный
+            </label>
+            <br>
+            <label>
+                <input type="radio" name="color" value="#00ff00"> Зеленый
+            </label>
+            <br>
+            <label>
+                <input type="radio" name="color" value="#0000ff"> Синий
+            </label>
+            <br>
+            <label>
+                <input type="radio" name="color" value="#ff00ff"> Фиолетовый
+            </label>
+            <br>
+            <label>
+                <input type="radio" name="color" value="#ffaf00"> Оранжевый
+            </label>
+            <br>
+            <button type="button" id="apply-color">Применить</button>
+        </form>
+    </div>
+
+    <!-- Текстовый контейнер в правом нижнем углу -->
+    <div id="text-container">
+        <h1>Лабораторная работа 5 вариант 23</h1>
+        <h3>Выполнил студент группы РК6-62б Сапожников Александр</h3>
+        <p>Разработать интерактивную web-программу для рисования конечно-элементной сетки по данным таблиц nodes и elements базы данных femdb. При указании мышью некоторого узла сетка должна перерисовываться с выделением цветом этого узла. Примечание. Для указания узла не должно требоваться абсолютно точное "попадание" курсора в узел.</p>
+    </div>
+
+    <script>
+        $(document).ready(function () {
+            let selectedColor = '#ff0000'; // Цвет по умолчанию
+            const grayColor = '#bfbfbf'; // Исходный серый цвет
+
+            // Загрузка SVG файла
+            $('#svg-container').load('/static/mesh.svg', function () {
+                // Найти все круги (узлы) в SVG
+                const nodes = $('#svg-container svg').find('circle');
+
+                // Функция для выделения узла при наведении мыши
+                function highlightElement(event) {
+                    $(event.currentTarget).attr('fill', selectedColor);
+                }
+
+                // Функция для возврата цвета узла к исходному при уводе мыши
+                function resetElementColor(event) {
+                    $(event.currentTarget).attr('fill', grayColor);
+                }
+
+                // Добавляем обработчики событий на все круги
+                nodes.on('mouseenter', highlightElement);
+                nodes.on('mouseleave', resetElementColor);
+
+                // Установить начальный цвет для всех узлов
+                nodes.attr('fill', grayColor);
+            });
+
+            // Обработчик нажатия на кнопку "Применить"
+            $('#apply-color').on('click', function () {
+                // Получить выбранный цвет из формы
+                const chosenColor = $('input[name="color"]:checked').val();
+
+                // Обновить выбранный цвет для узлов
+                if (chosenColor) {
+                    selectedColor = chosenColor;
+                }
+            });
+        });
+    </script>
+</body>
+
+</html>

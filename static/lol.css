@@ -1,0 +1,30 @@
+/* Общие настройки для body */
+body {
+    margin: 0;
+    padding: 0;
+    background-image: url('phone2.png');
+    background-size: cover;
+    height: 100vh;
+    display: flex;
+    justify-content: center; /* Центрируем элементы по горизонтали */
+    align-items: center; /* Центрируем элементы по вертикали */
+}
+
+/* Контейнер для SVG */
+#svg-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 70%; /* Устанавливаем ширину контейнера */
+    height: auto; /* Автоматическая высота контейнера */
+}
+
+/* Текст в правом нижнем углу */
+#text-container {
+    position: absolute; /* Позиционируем элемент абсолютно */
+    right: 20px; /* Отступ справа */
+    bottom: 20px; /* Отступ снизу */
+    text-align: right; /* Выравнивание текста по правому краю */
+    color: #d3d3d3; /* Светло-серый цвет текста */
+    margin: 0;
+}
